@@ -15,17 +15,14 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.naming.InitialContext;
-
 import rental.Car;
 import rental.CarRentalCompany;
 import rental.CarRentalCompanyRemote;
 import rental.CarType;
 import rental.RentalStore;
 import rental.Reservation;
-import session.CarRentalManager;
-import session.CarRentalSessionRemote;
 import session.CarRentalManagerRemote;
+import session.CarRentalSessionRemote;
 import session.SessionManagerRemote;
 
 public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, CarRentalManagerRemote>{

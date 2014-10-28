@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class CarType implements Serializable {
     
-    private String name;
+	private static final long serialVersionUID = 1L;
+	private String name;
     private int nbOfSeats;
     private boolean smokingAllowed;
     private double rentalPricePerDay;

@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 import rental.Car;
-import rental.CarRentalCompany;
 import rental.CarRentalCompanyRemote;
 import rental.CarType;
 import rental.RentalStore;
@@ -60,7 +59,7 @@ public class CarRentalManager implements CarRentalManagerRemote {
 
     
     public int getNbOfReservationsByClient(String client) {
-        Set<CarRentalCompany> allRentalComp = new HashSet<CarRentalCompany>(RentalStore.getRentals().values());
+        Set<CarRentalCompanyRemote> allRentalComp = new HashSet<CarRentalCompanyRemote>(RentalStore.getRentals().values());
         List<Reservation> resByClient = new ArrayList<Reservation>();
         for (CarRentalCompanyRemote carRentalComp : allRentalComp) {
             List<Car> allCarsByComp = new ArrayList<Car>(carRentalComp.getAllCars());

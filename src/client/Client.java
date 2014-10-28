@@ -1,5 +1,7 @@
 package client;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -11,17 +13,22 @@ import rental.Reservation;
 import session.CarRentalSessionRemote;
 import session.CarRentalManagerRemote;
 
-public class Main extends AbstractScriptedTripTest<CarRentalSessionRemote, CarRentalManagerRemote>{
+public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, CarRentalManagerRemote>{
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        Main main = new Main("simpleTrips");
-        main.run();
+		System.setSecurityManager(null);
+		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+		
+		SessionManagerRemote sm = (SessionManagerRemote) registry.lookup("sessionManager");
+		
+        Client client = new Client("trips");
+        client.run();
     }
 
-    public Main(String scriptFile) {
+    public Client(String scriptFile) {
         super(scriptFile);
     }
 

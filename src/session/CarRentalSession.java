@@ -29,7 +29,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
     }
 
     @Override
-    public void createQuote(ReservationConstraints constraints, String company) throws ReservationException{
+    public void createQuote(ReservationConstraints constraints, String company) throws ReservationException, RemoteException{
         Quote quote = RentalStore.getRentals().get(company).createQuote(constraints, this.clientName);
         quotes.add(quote);
     }
@@ -40,7 +40,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
     }
 
     @Override
-    public void confirmQuotes() throws ReservationException{
+    public void confirmQuotes() throws ReservationException, RemoteException{
         HashMap<Quote,Reservation> reservations = new HashMap<Quote, Reservation>();
         try {
             for(Quote quote : this.quotes){
@@ -58,7 +58,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
     }
 
     @Override
-    public Set<CarType> getAvailableCarTypes(Date start, Date end) {
+    public Set<CarType> getAvailableCarTypes(Date start, Date end) throws RemoteException {
         HashSet<CarType> carTypes = new HashSet<CarType>();
         for(CarRentalCompanyRemote company : RentalStore.getRentals().values()){
             carTypes.addAll(company.getAvailableCarTypes(start, end));

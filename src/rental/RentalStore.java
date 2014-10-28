@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
 import java.util.Map;
 
 import session.SessionManager;
@@ -16,6 +17,7 @@ public class RentalStore {
 	public static void main(String[] args) throws ReservationException, NumberFormatException, IOException {
 		System.setSecurityManager(null);
 		SessionManager sessionManager = new SessionManager();
+		rentalCompanies = new HashMap<String, CarRentalCompanyRemote>();
 
 		//Bind port 1099 to the registry
 		System.out.println("Initialize RMI");
@@ -31,7 +33,7 @@ public class RentalStore {
     }
     
     public static synchronized void addRentalCompany(String name, CarRentalCompanyRemote crcr) {
-    	if(!rentalCompanies.containsKey(name)) {
+    	if(rentalCompanies.get(name) == null) {
     		rentalCompanies.put(name, crcr);
     	}
     }

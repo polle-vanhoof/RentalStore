@@ -44,10 +44,11 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
         client.run();
     }
 
-    private static void registerCompanies() throws RemoteException {
+    private static void registerCompanies() throws Exception {
     	// register dockx
     	CarRentalCompanyRemote dockx = loadRental("Dockx","dockx.csv");
 		CarRentalManagerRemote dockxSession = sm.getManagerSession();
+		System.out.println("test");
 		dockxSession.setCompanyName("Dockx");
 		CarRentalCompanyRemote stubDockx = (CarRentalCompanyRemote) UnicastRemoteObject.exportObject(dockx, 0);
 		dockxSession.registerCompany(stubDockx);
@@ -58,6 +59,8 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 		hertzSession.setCompanyName("Hertz");
 		CarRentalCompanyRemote stubHertz = (CarRentalCompanyRemote) UnicastRemoteObject.exportObject(hertz, 0);
 		hertzSession.registerCompany(stubHertz);
+		
+		
 	}
 
 	public Client(String scriptFile) {

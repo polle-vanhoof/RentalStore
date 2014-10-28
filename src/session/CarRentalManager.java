@@ -52,8 +52,8 @@ public class CarRentalManager implements CarRentalManagerRemote {
         return resByCarType.size();
     }
 
-    
-    public int getNbOfReservationsByClient(String client) {
+    @Override
+    public int getNbOfReservationsByClient(String client) throws RemoteException {
         Set<CarRentalCompanyRemote> allRentalComp = new HashSet<CarRentalCompanyRemote>(RentalStore.getRentals().values());
         List<Reservation> resByClient = new ArrayList<Reservation>();
         for (CarRentalCompanyRemote carRentalComp : allRentalComp) {

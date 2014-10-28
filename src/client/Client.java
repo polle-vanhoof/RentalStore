@@ -12,6 +12,7 @@ import rental.CarType;
 import rental.Reservation;
 import session.CarRentalSessionRemote;
 import session.CarRentalManagerRemote;
+import session.SessionManagerRemote;
 
 public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, CarRentalManagerRemote>{
     

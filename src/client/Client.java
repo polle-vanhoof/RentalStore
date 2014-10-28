@@ -111,8 +111,7 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 
 	@Override
 	protected Set<String> getBestClients(CarRentalManagerRemote ms) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return ms.getBestClients();
 	}
 
 	@Override

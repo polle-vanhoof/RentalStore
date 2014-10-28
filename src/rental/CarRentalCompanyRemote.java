@@ -48,4 +48,6 @@ public interface CarRentalCompanyRemote extends Remote{
 
 	public CarType getMostPopularCarType();
 
+	public String getBestClient();
+
 }

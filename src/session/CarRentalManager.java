@@ -97,5 +97,17 @@ public class CarRentalManager implements CarRentalManagerRemote {
 		}
 		return popular;
 	}
+	
+	@Override
+	public Set<String> getBestClients(){
+		HashSet<String> bestClients = new HashSet<String>();
+		for(CarRentalCompanyRemote crc : RentalStore.getRentals().values()){
+			String client = crc.getBestClient();
+			if(client != null){
+				bestClients.add(client);
+			}
+		}
+		return bestClients;
+	}
 
 }

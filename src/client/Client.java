@@ -94,8 +94,7 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 
 	@Override
 	protected String getCheapestCarType(CarRentalSessionRemote session, Date start, Date end) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return session.getCheapestCarType(start, end);
 	}
 
 	@Override

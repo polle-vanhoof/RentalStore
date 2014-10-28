@@ -20,6 +20,7 @@ import rental.CarRentalCompanyRemote;
 import rental.CarType;
 import rental.RentalStore;
 import rental.Reservation;
+import rental.ReservationConstraints;
 import session.CarRentalManagerRemote;
 import session.CarRentalSessionRemote;
 import session.SessionManagerRemote;
@@ -99,14 +100,13 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 
 	@Override
 	protected void addQuoteToSession(CarRentalSessionRemote session, Date start, Date end, String carType, String carRentalName) throws Exception {
-		// TODO Auto-generated method stub
-		
+		ReservationConstraints constraints = new ReservationConstraints(start, end, carType);
+		session.createQuote(constraints, carRentalName);
 	}
 
 	@Override
 	protected List<Reservation> confirmQuotes(CarRentalSessionRemote session) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return session.confirmQuotes();
 	}
 
 	@Override

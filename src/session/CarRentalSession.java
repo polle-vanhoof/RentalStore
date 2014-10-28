@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import rental.CarRentalCompany;
@@ -41,14 +43,17 @@ public class CarRentalSession implements CarRentalSessionRemote {
     }
 
     @Override
-    public void confirmQuotes() throws ReservationException, RemoteException{
+    public List<Reservation> confirmQuotes() throws ReservationException, RemoteException{
         HashMap<Quote,Reservation> reservations = new HashMap<Quote, Reservation>();
+        LinkedList<Reservation> confirmedReservations = new LinkedList<Reservation>();
         try {
             for(Quote quote : this.quotes){
                 CarRentalCompanyRemote company = RentalStore.getRentals().get(quote.getRentalCompany());
                 Reservation r = company.confirmQuote(quote);
                 reservations.put(quote, r);
             }
+            confirmedReservations.addAll(reservations.values());
+            
         } catch (ReservationException ex) {
             for(Quote q : reservations.keySet()){
                  CarRentalCompanyRemote company = RentalStore.getRentals().get(q.getRentalCompany());
@@ -56,6 +61,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
             }
             throw ex;
         }
+        return confirmedReservations;
     }
 
     @Override

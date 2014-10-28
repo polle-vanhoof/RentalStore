@@ -38,8 +38,10 @@ public class RentalStore {
         return rentalCompanies;
     }
     
-    public static void addRentalCompany(String name, CarRentalCompany crc) {
-    	rentalCompanies.put(name, crc);
+    public static synchronized void addRentalCompany(String name, CarRentalCompany crc) {
+    	if(!rentalCompanies.containsKey(name)) {
+    		rentalCompanies.put(name, crc);
+    	}
     }
     
 }

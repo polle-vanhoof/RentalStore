@@ -85,6 +85,8 @@ public class CarRentalManager implements CarRentalManagerRemote {
         this.companyName = carRentalName;
     }
     
-    
+    public void registerCompany(CarRentalCompany company){
+    	// TODO
+    }
 
 }

@@ -8,6 +8,8 @@ package session;
 import java.rmi.Remote;
 import java.util.Set;
 
+import rental.CarRentalCompany;
+
 
 public interface CarRentalManagerRemote extends Remote{
     Set<String> getCarTypes(String carRentalCompany) throws Exception;
@@ -17,4 +19,6 @@ public interface CarRentalManagerRemote extends Remote{
     public void setClientName(String name);
 
     public void setCompanyName(String carRentalName);
+    
+    public void registerCompany(CarRentalCompany company);
 }

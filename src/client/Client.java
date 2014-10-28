@@ -1,21 +1,35 @@
 package client;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.naming.InitialContext;
 
+import rental.Car;
+import rental.CarRentalCompany;
 import rental.CarType;
+import rental.RentalStore;
 import rental.Reservation;
+import session.CarRentalManager;
 import session.CarRentalSessionRemote;
 import session.CarRentalManagerRemote;
 import session.SessionManagerRemote;
 
 public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, CarRentalManagerRemote>{
     
+	
+	static SessionManagerRemote sm = null;
     /**
      * @param args the command line arguments
      */
@@ -23,20 +37,35 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 		System.setSecurityManager(null);
 		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 		
-		SessionManagerRemote sm = (SessionManagerRemote) registry.lookup("sessionManager");
+		sm = (SessionManagerRemote) registry.lookup("sessionManager");
+		
+		registerCompanies();
 		
         Client client = new Client("trips");
         client.run();
     }
 
-    public Client(String scriptFile) {
+    private static void registerCompanies() throws RemoteException {
+    	// register dockx
+    	CarRentalCompany dockx = loadRental("Dockx","dockx.csv");
+		CarRentalManagerRemote dockxSession = sm.getManagerSession();
+		dockxSession.setCompanyName("Dockx");
+		dockxSession.registerCompany(dockx);
+		
+		//register hertz
+		CarRentalCompany hertz = loadRental("Hertz","hertz.csv");
+		CarRentalManagerRemote hertzSession = sm.getManagerSession();
+		hertzSession.setCompanyName("Hertz");
+		hertzSession.registerCompany(hertz);
+	}
+
+	public Client(String scriptFile) {
         super(scriptFile);
     }
 
     @Override
     protected CarRentalSessionRemote getNewReservationSession(String name) throws Exception {
-    	// TODO Auto-generated method stub
-    	return null;
+    	return sm.getReservationSession();
     }
 
     @Override
@@ -58,8 +87,7 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 
 	@Override
 	protected CarRentalManagerRemote getNewManagerSession(String name) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sm.getManagerSession();
 	}
 
 	@Override
@@ -91,4 +119,52 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private static CarRentalCompany loadRental(String name, String datafile) {
+        Logger.getLogger(RentalStore.class.getName()).log(Level.INFO, "loading {0} from file {1}", new Object[]{name, datafile});
+        try {
+            List<Car> cars = loadData(datafile);
+            CarRentalCompany company = new CarRentalCompany(name, cars);
+            return company;
+        } catch (NumberFormatException ex) {
+            Logger.getLogger(RentalStore.class.getName()).log(Level.SEVERE, "bad file", ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RentalStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+		return null;
+    }
+
+    private static List<Car> loadData(String datafile)
+            throws NumberFormatException, IOException {
+
+        List<Car> cars = new LinkedList<Car>();
+
+        int nextuid = 0;
+       
+        //open file from jar
+        BufferedReader in = new BufferedReader(new InputStreamReader(RentalStore.class.getClassLoader().getResourceAsStream(datafile)));
+        //while next line exists
+        while (in.ready()) {
+            //read line
+            String line = in.readLine();
+            //if comment: skip
+            if (line.startsWith("#")) {
+                continue;
+            }
+            //tokenize on ,
+            StringTokenizer csvReader = new StringTokenizer(line, ",");
+            //create new car type from first 5 fields
+            CarType type = new CarType(csvReader.nextToken(),
+                    Integer.parseInt(csvReader.nextToken()),
+                    Float.parseFloat(csvReader.nextToken()),
+                    Double.parseDouble(csvReader.nextToken()),
+                    Boolean.parseBoolean(csvReader.nextToken()));
+            //create N new cars with given type, where N is the 5th field
+            for (int i = Integer.parseInt(csvReader.nextToken()); i > 0; i--) {
+                cars.add(new Car(nextuid++, type));
+            }
+        }
+
+        return cars;
+    }
 }

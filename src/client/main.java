@@ -6,8 +6,6 @@ import rental.CarType;
 
 public class Main extends AbstractScriptedSimpleTripTest<CarRentalSessionRemote, CarRentalManagerRemote>{
     
-    @EJB
-    static CarRentalSessionRemote session;
     /**
      * @param args the command line arguments
      */

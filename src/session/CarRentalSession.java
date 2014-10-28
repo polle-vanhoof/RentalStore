@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
-import javax.ejb.Stateful;
 import rental.CarRentalCompany;
 import rental.CarType;
 import rental.Quote;
@@ -14,7 +13,7 @@ import rental.Reservation;
 import rental.ReservationConstraints;
 import rental.ReservationException;
 
-@Stateful
+
 public class CarRentalSession implements CarRentalSessionRemote {
     private final HashSet<Quote> quotes = new HashSet<Quote>();
     private String clientName = "";

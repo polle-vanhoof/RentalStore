@@ -2,13 +2,11 @@ package session;
 
 import java.util.Date;
 import java.util.Set;
-import javax.ejb.Remote;
 import rental.CarType;
 import rental.Quote;
 import rental.ReservationConstraints;
 import rental.ReservationException;
 
-@Remote
 public interface CarRentalSessionRemote {
     
     Set<String> getAllRentalCompanies();

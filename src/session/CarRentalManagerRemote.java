@@ -6,13 +6,8 @@
 package session;
 
 import java.util.Set;
-import javax.ejb.Remote;
 
-/**
- *
- * @author Ewoud
- */
-@Remote
+
 public interface CarRentalManagerRemote {
     Set<String> getCarTypes(String carRentalCompany) throws Exception;
     int getNbOfReservationsByCarType(String carRentalCompany, String carType) throws Exception;

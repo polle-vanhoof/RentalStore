@@ -3,7 +3,6 @@ package client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -39,7 +38,6 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 		sm = (SessionManagerRemote) registry.lookup("sessionManager");
 		
 		registerCompanies();
-		
         Client client = new Client("trips");
         client.run();
     }

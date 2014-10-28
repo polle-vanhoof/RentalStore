@@ -5,10 +5,11 @@
  */
 package session;
 
+import java.rmi.Remote;
 import java.util.Set;
 
 
-public interface CarRentalManagerRemote {
+public interface CarRentalManagerRemote extends Remote{
     Set<String> getCarTypes(String carRentalCompany) throws Exception;
     int getNbOfReservationsByCarType(String carRentalCompany, String carType) throws Exception;
     int getNbOfReservationsByClient (String client) throws Exception;

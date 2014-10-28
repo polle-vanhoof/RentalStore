@@ -5,11 +5,13 @@
  */
 package session;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import rental.Car;
 import rental.CarRentalCompany;
 import rental.CarType;
@@ -18,6 +20,10 @@ import rental.Reservation;
 
 
 public class CarRentalManager implements CarRentalManagerRemote {
+	
+	public CarRentalManager() throws RemoteException{
+		
+	}
 
     String clientName = "";
     String companyName = "";

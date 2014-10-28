@@ -27,10 +27,8 @@ public class Main extends AbstractScriptedTripTest<CarRentalSessionRemote, CarRe
 
     @Override
     protected CarRentalSessionRemote getNewReservationSession(String name) throws Exception {
-        InitialContext context = new InitialContext();
-        CarRentalSessionRemote rentalSession = (CarRentalSessionRemote) context.lookup(CarRentalSessionRemote.class.getName());
-        rentalSession.setClientName(name);
-        return rentalSession;
+    	// TODO Auto-generated method stub
+    	return null;
     }
 
     @Override

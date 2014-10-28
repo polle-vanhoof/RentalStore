@@ -1,13 +1,15 @@
 package session;
 
+import java.rmi.Remote;
 import java.util.Date;
 import java.util.Set;
+
 import rental.CarType;
 import rental.Quote;
 import rental.ReservationConstraints;
 import rental.ReservationException;
 
-public interface CarRentalSessionRemote {
+public interface CarRentalSessionRemote extends Remote{
     
     Set<String> getAllRentalCompanies();
     

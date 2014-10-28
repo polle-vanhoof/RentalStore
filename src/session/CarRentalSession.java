@@ -1,10 +1,12 @@
 package session;
 
+import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
+
 import rental.CarRentalCompany;
 import rental.CarType;
 import rental.Quote;
@@ -17,6 +19,10 @@ import rental.ReservationException;
 public class CarRentalSession implements CarRentalSessionRemote {
     private final HashSet<Quote> quotes = new HashSet<Quote>();
     private String clientName = "";
+    
+    public CarRentalSession() throws RemoteException{
+		// TODO Auto-generated constructor stub
+	}
 
     @Override
     public Set<String> getAllRentalCompanies() {

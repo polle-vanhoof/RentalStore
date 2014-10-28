@@ -117,8 +117,7 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 
 	@Override
 	protected CarType getMostPopularCarTypeIn(CarRentalManagerRemote ms, String carRentalCompanyName) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return ms.getMostPopularCarTypeIn(carRentalCompanyName);
 	}
 	
 	private static CarRentalCompanyRemote loadRental(String name, String datafile) {

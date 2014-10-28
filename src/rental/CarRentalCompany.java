@@ -31,9 +31,7 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 			carTypes.put(car.getType().getName(), car.getType());
 	}
 
-	/* (non-Javadoc)
-	 * @see rental.CarRentalCompanyRemote#getName()
-	 */
+
 
 	@Override
 	public String getName() {
@@ -44,18 +42,14 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 		this.name = name;
 	}
 
-	/* (non-Javadoc)
-	 * @see rental.CarRentalCompanyRemote#getAllTypes()
-	 */
+
 
 	@Override
 	public Collection<CarType> getAllTypes(){
 		return carTypes.values();
 	}
 	
-	/* (non-Javadoc)
-	 * @see rental.CarRentalCompanyRemote#getType(java.lang.String)
-	 */
+
 	@Override
 	public CarType getType(String carTypeName){
 		if(carTypes.containsKey(carTypeName))
@@ -63,18 +57,14 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 		throw new IllegalArgumentException("<" + carTypeName + "> No cartype of name " + carTypeName);
 	}
 	
-	/* (non-Javadoc)
-	 * @see rental.CarRentalCompanyRemote#isAvailable(java.lang.String, java.util.Date, java.util.Date)
-	 */
+
 	@Override
 	public boolean isAvailable(String carTypeName, Date start, Date end) {
 		logger.log(Level.INFO, "<{0}> Checking availability for car type {1}", new Object[]{name, carTypeName});
 		return getAvailableCarTypes(start, end).contains(carTypes.get(carTypeName));
 	}
 	
-	/* (non-Javadoc)
-	 * @see rental.CarRentalCompanyRemote#getAvailableCarTypes(java.util.Date, java.util.Date)
-	 */
+
 	@Override
 	public Set<CarType> getAvailableCarTypes(Date start, Date end) {
 		Set<CarType> availableCarTypes = new HashSet<CarType>();
@@ -87,17 +77,12 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see rental.CarRentalCompanyRemote#getAllCars()
-	 */
 	@Override
 	public List<Car> getAllCars(){
 		return cars;
 	}
 
-	/* (non-Javadoc)
-	 * @see rental.CarRentalCompanyRemote#getCarsByType(java.lang.String)
-	 */
+
 	@Override
 	public Set<Car> getCarsByType(String carType) {
 		Set<Car> carsByType = new HashSet<Car>();
@@ -128,9 +113,6 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 	}
 
         
-	/* (non-Javadoc)
-	 * @see rental.CarRentalCompanyRemote#createQuote(rental.ReservationConstraints, java.lang.String)
-	 */
 
 	@Override
 	public Quote createQuote(ReservationConstraints constraints, String guest)
@@ -155,9 +137,7 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 						/ (1000 * 60 * 60 * 24D));
 	}
 
-	/* (non-Javadoc)
-	 * @see rental.CarRentalCompanyRemote#confirmQuote(rental.Quote)
-	 */
+
 	@Override
 	public Reservation confirmQuote(Quote quote) throws ReservationException {
 		logger.log(Level.INFO, "<{0}> Reservation of {1}", new Object[]{name, quote.toString()});
@@ -172,9 +152,7 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 		return res;
 	}
 
-	/* (non-Javadoc)
-	 * @see rental.CarRentalCompanyRemote#cancelReservation(rental.Reservation)
-	 */
+
 	@Override
 	public void cancelReservation(Reservation res) {
 		logger.log(Level.INFO, "<{0}> Cancelling reservation {1}", new Object[]{name, res.toString()});
@@ -189,5 +167,26 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 			}
 		}
 		return cheapest;
+	}
+	
+	/** Get all cars of specific type, count the amount of reservations
+	 * 
+	 * @return most popular carType
+	 */
+	@Override
+	public CarType getMostPopularCarType(){
+		CarType popular = null;
+		int maxReservations = -1;
+		for(CarType type : getAllTypes()){
+			int numReservations = 0;
+			for(Car car : getCarsByType(type.toString())){
+				numReservations =+ car.getAllReservations().size();
+			}
+			if(numReservations > maxReservations){
+				numReservations = maxReservations;
+				popular = type;
+			}
+		}
+		return popular;
 	}
 }

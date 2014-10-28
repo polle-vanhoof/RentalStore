@@ -46,4 +46,6 @@ public interface CarRentalCompanyRemote extends Remote{
 
 	public abstract void cancelReservation(Reservation res) throws RemoteException;
 
+	public CarType getMostPopularCarType();
+
 }

@@ -7,9 +7,11 @@ package session;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.Set;
 
 import rental.CarRentalCompanyRemote;
+import rental.CarType;
 
 
 public interface CarRentalManagerRemote extends Remote{
@@ -22,4 +24,6 @@ public interface CarRentalManagerRemote extends Remote{
     public void setCompanyName(String carRentalName) throws RemoteException;
     
     public void registerCompany(CarRentalCompanyRemote company) throws RemoteException;
+    
+	public CarType getMostPopularCarTypeIn(String company) throws Exception;
 }

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import rental.CarRentalCompany;
 import rental.CarRentalCompanyRemote;
 import rental.CarType;
 import rental.Quote;
@@ -69,6 +70,16 @@ public class CarRentalSession implements CarRentalSessionRemote {
     @Override
     public void setClientName(String name) {
         this.clientName = name;
+    }
+    
+    public String getCheapestCarType(Date start, Date end) throws RemoteException{
+    	CarType cheapest = new CarType("dummy", 0, 0, 0, false);
+    	for(CarRentalCompanyRemote company : RentalStore.getRentals().values()) {
+    		if(cheapest.getRentalPricePerDay() < company.getCheapestType(start, end).getRentalPricePerDay()) {
+    			cheapest = company.getCheapestType(start, end);
+    		}	
+    	}
+    return cheapest.getName();
     }
     
 }

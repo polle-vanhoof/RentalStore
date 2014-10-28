@@ -26,6 +26,8 @@ public interface CarRentalCompanyRemote extends Remote{
 	public abstract boolean isAvailable(String carTypeName, Date start, Date end) throws RemoteException;
 
 	public abstract Set<CarType> getAvailableCarTypes(Date start, Date end) throws RemoteException;
+	
+	public abstract CarType getCheapestType(Date start, Date end) throws RemoteException;
 
 	/*********
 	 * CARS *

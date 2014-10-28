@@ -24,4 +24,6 @@ public interface CarRentalSessionRemote extends Remote{
     
     void setClientName(String name) throws RemoteException;
     
+    String getCheapestCarType(Date start, Date end) throws RemoteException;
+    
 }

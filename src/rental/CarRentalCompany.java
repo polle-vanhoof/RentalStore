@@ -85,30 +85,30 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 		}
 		return availableCarTypes;
 	}
-        
+
 
 	/* (non-Javadoc)
 	 * @see rental.CarRentalCompanyRemote#getAllCars()
 	 */
-        @Override
-		public List<Car> getAllCars(){
-            return cars;
-        }
-        
-        /* (non-Javadoc)
-		 * @see rental.CarRentalCompanyRemote#getCarsByType(java.lang.String)
-		 */
-        @Override
-		public Set<Car> getCarsByType(String carType) {
-            Set<Car> carsByType = new HashSet<Car>();
-            for (Car car : cars) {
-                if (car.getType().getName().equals(carType)) {
-                    carsByType.add(car);
-                }
-            }
-            return carsByType;
-        }
-	
+	@Override
+	public List<Car> getAllCars(){
+		return cars;
+	}
+
+	/* (non-Javadoc)
+	 * @see rental.CarRentalCompanyRemote#getCarsByType(java.lang.String)
+	 */
+	@Override
+	public Set<Car> getCarsByType(String carType) {
+		Set<Car> carsByType = new HashSet<Car>();
+		for (Car car : cars) {
+			if (car.getType().getName().equals(carType)) {
+				carsByType.add(car);
+			}
+		}
+		return carsByType;
+	}
+
 	private Car getCar(int uid) {
 		for (Car car : cars) {
 			if (car.getId() == uid)
@@ -179,5 +179,15 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 	public void cancelReservation(Reservation res) {
 		logger.log(Level.INFO, "<{0}> Cancelling reservation {1}", new Object[]{name, res.toString()});
 		getCar(res.getCarId()).removeReservation(res);
+	}
+	
+	public CarType getCheapestType(Date start, Date end) {
+		CarType cheapest = new CarType("dummy", 0, 0, 0, false);
+		for(CarType carType : getAvailableCarTypes(start, end)) {
+			if(carType.getRentalPricePerDay() < cheapest.getRentalPricePerDay()) {
+				cheapest = carType;
+			}
+		}
+		return cheapest;
 	}
 }

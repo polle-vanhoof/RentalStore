@@ -26,5 +26,5 @@ public interface CarRentalManagerRemote extends Remote{
     public void registerCompany(CarRentalCompanyRemote company) throws RemoteException;
     
 	public CarType getMostPopularCarTypeIn(String company) throws Exception;
-	public Set<String> getBestClients();
+	public Set<String> getBestClients() throws RemoteException;
 }

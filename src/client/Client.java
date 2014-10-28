@@ -47,7 +47,6 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
     	// register dockx
     	CarRentalCompanyRemote dockx = loadRental("Dockx","dockx.csv");
 		CarRentalManagerRemote dockxSession = sm.getManagerSession();
-		System.out.println("test");
 		dockxSession.setCompanyName("Dockx");
 		CarRentalCompanyRemote stubDockx = (CarRentalCompanyRemote) UnicastRemoteObject.exportObject(dockx, 0);
 		dockxSession.registerCompany(stubDockx);

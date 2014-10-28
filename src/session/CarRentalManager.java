@@ -99,7 +99,7 @@ public class CarRentalManager implements CarRentalManagerRemote {
 	}
 	
 	@Override
-	public Set<String> getBestClients(){
+	public Set<String> getBestClients() throws RemoteException{
 		HashSet<String> bestClients = new HashSet<String>();
 		for(CarRentalCompanyRemote crc : RentalStore.getRentals().values()){
 			String client = crc.getBestClient();

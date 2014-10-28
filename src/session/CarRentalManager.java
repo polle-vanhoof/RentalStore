@@ -14,6 +14,7 @@ import java.util.Set;
 
 import rental.Car;
 import rental.CarRentalCompany;
+import rental.CarRentalCompanyRemote;
 import rental.CarType;
 import rental.RentalStore;
 import rental.Reservation;
@@ -29,7 +30,7 @@ public class CarRentalManager implements CarRentalManagerRemote {
     String companyName = "";
     @Override
     public Set<String> getCarTypes(String carRentalCompany) throws Exception {
-        CarRentalCompany carRentalComp = RentalStore.getRentals().get(carRentalCompany);
+        CarRentalCompanyRemote carRentalComp = RentalStore.getRentals().get(carRentalCompany);
         if(carRentalComp == null) {
             throw new IllegalArgumentException("No CarRentalCompany found with name " + carRentalCompany + ".");
         }
@@ -45,7 +46,7 @@ public class CarRentalManager implements CarRentalManagerRemote {
 
     @Override
     public int getNbOfReservationsByCarType(String carRentalCompany, String carType) throws Exception {
-        CarRentalCompany carRentalComp = RentalStore.getRentals().get(carRentalCompany);
+        CarRentalCompanyRemote carRentalComp = RentalStore.getRentals().get(carRentalCompany);
         if(carRentalComp == null) {
             throw new IllegalArgumentException("No CarRentalCompany found with name " + carRentalCompany + ".");
         }
@@ -61,7 +62,7 @@ public class CarRentalManager implements CarRentalManagerRemote {
     public int getNbOfReservationsByClient(String client) {
         Set<CarRentalCompany> allRentalComp = new HashSet<CarRentalCompany>(RentalStore.getRentals().values());
         List<Reservation> resByClient = new ArrayList<Reservation>();
-        for (CarRentalCompany carRentalComp : allRentalComp) {
+        for (CarRentalCompanyRemote carRentalComp : allRentalComp) {
             List<Car> allCarsByComp = new ArrayList<Car>(carRentalComp.getAllCars());
             for(Car car : allCarsByComp) {
                 List<Reservation> allResByCarByComp = new ArrayList<Reservation>(car.getAllReservations());
@@ -85,7 +86,7 @@ public class CarRentalManager implements CarRentalManagerRemote {
         this.companyName = carRentalName;
     }
     
-    public void registerCompany(CarRentalCompany company){
+    public void registerCompany(CarRentalCompanyRemote company){
     	// TODO
     }
 

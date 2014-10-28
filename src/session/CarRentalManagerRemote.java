@@ -8,7 +8,7 @@ package session;
 import java.rmi.Remote;
 import java.util.Set;
 
-import rental.CarRentalCompany;
+import rental.CarRentalCompanyRemote;
 
 
 public interface CarRentalManagerRemote extends Remote{
@@ -20,5 +20,5 @@ public interface CarRentalManagerRemote extends Remote{
 
     public void setCompanyName(String carRentalName);
     
-    public void registerCompany(CarRentalCompany company);
+    public void registerCompany(CarRentalCompanyRemote company);
 }

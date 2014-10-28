@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.naming.InitialContext;
 
 import rental.Car;
 import rental.CarRentalCompany;
+import rental.CarRentalCompanyRemote;
 import rental.CarType;
 import rental.RentalStore;
 import rental.Reservation;
@@ -47,16 +49,18 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 
     private static void registerCompanies() throws RemoteException {
     	// register dockx
-    	CarRentalCompany dockx = loadRental("Dockx","dockx.csv");
+    	CarRentalCompanyRemote dockx = loadRental("Dockx","dockx.csv");
 		CarRentalManagerRemote dockxSession = sm.getManagerSession();
 		dockxSession.setCompanyName("Dockx");
-		dockxSession.registerCompany(dockx);
+		CarRentalCompanyRemote stubDockx = (CarRentalCompanyRemote) UnicastRemoteObject.exportObject(dockx, 0);
+		dockxSession.registerCompany(stubDockx);
 		
 		//register hertz
-		CarRentalCompany hertz = loadRental("Hertz","hertz.csv");
+		CarRentalCompanyRemote hertz = loadRental("Hertz","hertz.csv");
 		CarRentalManagerRemote hertzSession = sm.getManagerSession();
 		hertzSession.setCompanyName("Hertz");
-		hertzSession.registerCompany(hertz);
+		CarRentalCompanyRemote stubHertz = (CarRentalCompanyRemote) UnicastRemoteObject.exportObject(hertz, 0);
+		hertzSession.registerCompany(stubHertz);
 	}
 
 	public Client(String scriptFile) {
@@ -120,11 +124,11 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 		return null;
 	}
 	
-	private static CarRentalCompany loadRental(String name, String datafile) {
+	private static CarRentalCompanyRemote loadRental(String name, String datafile) {
         Logger.getLogger(RentalStore.class.getName()).log(Level.INFO, "loading {0} from file {1}", new Object[]{name, datafile});
         try {
             List<Car> cars = loadData(datafile);
-            CarRentalCompany company = new CarRentalCompany(name, cars);
+            CarRentalCompanyRemote company = new CarRentalCompany(name, cars);
             return company;
         } catch (NumberFormatException ex) {
             Logger.getLogger(RentalStore.class.getName()).log(Level.SEVERE, "bad file", ex);

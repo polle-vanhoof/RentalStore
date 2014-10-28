@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import rental.CarRentalCompany;
+import rental.CarRentalCompanyRemote;
 import rental.CarType;
 import rental.Quote;
 import rental.RentalStore;
@@ -45,13 +45,13 @@ public class CarRentalSession implements CarRentalSessionRemote {
         HashMap<Quote,Reservation> reservations = new HashMap<Quote, Reservation>();
         try {
             for(Quote quote : this.quotes){
-                CarRentalCompany company = RentalStore.getRentals().get(quote.getRentalCompany());
+                CarRentalCompanyRemote company = RentalStore.getRentals().get(quote.getRentalCompany());
                 Reservation r = company.confirmQuote(quote);
                 reservations.put(quote, r);
             }
         } catch (ReservationException ex) {
             for(Quote q : reservations.keySet()){
-                 CarRentalCompany company = RentalStore.getRentals().get(q.getRentalCompany());
+                 CarRentalCompanyRemote company = RentalStore.getRentals().get(q.getRentalCompany());
                  company.cancelReservation(reservations.get(q));
             }
             throw ex;
@@ -61,7 +61,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
     @Override
     public Set<CarType> getAvailableCarTypes(Date start, Date end) {
         HashSet<CarType> carTypes = new HashSet<CarType>();
-        for(CarRentalCompany company : RentalStore.getRentals().values()){
+        for(CarRentalCompanyRemote company : RentalStore.getRentals().values()){
             carTypes.addAll(company.getAvailableCarTypes(start, end));
         }
         return carTypes;

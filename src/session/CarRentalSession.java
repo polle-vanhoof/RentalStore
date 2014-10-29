@@ -79,17 +79,12 @@ public class CarRentalSession implements CarRentalSessionRemote {
 	}
 
 	@Override
-	public String getCheapestCarType(Date start, Date end) throws Exception{
-		CarType cheapest = null;
-		double highestPrice = -1;
+	public String getCheapestCarType(Date start, Date end) throws Exception {
+		CarType cheapest = new CarType("dummy", 0, 0, Double.MAX_VALUE, false);
 		for(CarRentalCompanyRemote company : RentalStore.getRentals().values()) {
-			if(highestPrice < company.getCheapestType(start, end).getRentalPricePerDay()) {
+			if(cheapest.getRentalPricePerDay() > company.getCheapestType(start, end).getRentalPricePerDay()) {
 				cheapest = company.getCheapestType(start, end);
-				highestPrice = company.getCheapestType(start, end).getRentalPricePerDay();
 			}	
-		}
-		if(cheapest == null){
-			throw new Exception("there was no cheapest car type");
 		}
 		return cheapest.getName();
 	}

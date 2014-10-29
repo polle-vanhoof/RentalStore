@@ -160,7 +160,7 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 	}
 	
 	public CarType getCheapestType(Date start, Date end) {
-		CarType cheapest = new CarType("dummy", 0, 0, 0, false);
+		CarType cheapest = new CarType("dummy", 0, 0, Double.MAX_VALUE, false);
 		for(CarType carType : getAvailableCarTypes(start, end)) {
 			if(carType.getRentalPricePerDay() < cheapest.getRentalPricePerDay()) {
 				cheapest = carType;

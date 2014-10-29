@@ -266,7 +266,7 @@ public abstract class AbstractScriptedTripTest<ReservationSession, ManagerSessio
 								System.out.println("A cheapest car type is: " + typeNameIs);
 							} else {
 								System.err
-										.println("Wrong cheapest car type: typeNameIs (line "
+										.println("Wrong cheapest car type: " +typeNameIs+" (line "
 												+ lnr + ")");
 							}
 						} else {

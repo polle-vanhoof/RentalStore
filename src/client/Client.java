@@ -67,7 +67,9 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 
     @Override
     protected CarRentalSessionRemote getNewReservationSession(String name) throws Exception {
-    	return sm.getReservationSession();
+    	CarRentalSessionRemote rentalSession = sm.getReservationSession();
+    	rentalSession.setClientName(name);
+    	return rentalSession;
     }
 
     @Override
@@ -89,7 +91,9 @@ public class Client extends AbstractScriptedTripTest<CarRentalSessionRemote, Car
 
 	@Override
 	protected CarRentalManagerRemote getNewManagerSession(String name) throws Exception {
-		return sm.getManagerSession();
+		CarRentalManagerRemote managerSession = sm.getManagerSession();
+		managerSession.setClientName(name);
+		return managerSession;
 	}
 
 	@Override

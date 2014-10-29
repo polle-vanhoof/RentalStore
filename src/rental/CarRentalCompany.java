@@ -179,11 +179,11 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 		int maxReservations = -1;
 		for(CarType type : getAllTypes()){
 			int numReservations = 0;
-			for(Car car : getCarsByType(type.toString())){
+			for(Car car : getCarsByType(type.getName())){
 				numReservations =+ car.getAllReservations().size();
 			}
 			if(numReservations > maxReservations){
-				numReservations = maxReservations;
+				maxReservations = numReservations;
 				popular = type;
 			}
 		}

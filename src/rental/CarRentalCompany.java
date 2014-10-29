@@ -191,29 +191,7 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 	}
 	
 	@Override
-	public String getBestClient(){
-		HashMap<String, Integer> clientReservations = new HashMap<String, Integer>();
-		for(Reservation res : getAllReservations()){
-			String client = res.getCarRenter();
-			if(clientReservations.get(client) == null){
-				clientReservations.put(client, 1);
-			}else{
-				clientReservations.put(client, clientReservations.get(client)+1);
-			}
-		}
-		int maxReservations = -1;
-		String bestClient = null;
-		for(String client : clientReservations.keySet()){
-			int clientNum = clientReservations.get(client);
-			if(clientNum> maxReservations){
-				bestClient = client;
-				maxReservations = clientNum;
-			}
-		}
-		return bestClient;
-	}
-	
-	private List<Reservation> getAllReservations(){
+	public List<Reservation> getAllReservations(){
 		LinkedList<Reservation> reservations = new LinkedList<Reservation>();
 		for(Car car : getAllCars()){
 			reservations.addAll(car.getAllReservations());

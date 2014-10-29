@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -101,9 +102,27 @@ public class CarRentalManager implements CarRentalManagerRemote {
 	@Override
 	public Set<String> getBestClients() throws RemoteException{
 		HashSet<String> bestClients = new HashSet<String>();
+		HashMap<String, Integer> clientReservations = new HashMap<String, Integer>();
 		for(CarRentalCompanyRemote crc : RentalStore.getRentals().values()){
-			String client = crc.getBestClient();
-			if(client != null){
+			for(Reservation res : crc.getAllReservations()){
+				String client = res.getCarRenter();
+				if(clientReservations.get(client) == null){
+					clientReservations.put(client, 1);
+				}else{
+					clientReservations.put(client, clientReservations.get(client)+1);
+				}
+			}
+		}
+		
+		int maxReservations = -1;
+		for(String client : clientReservations.keySet()){
+			int clientNum = clientReservations.get(client);
+			if(clientNum> maxReservations){
+				maxReservations = clientNum;
+			}
+		}
+		for(String client : clientReservations.keySet()){
+			if(clientReservations.get(client) == maxReservations){
 				bestClients.add(client);
 			}
 		}

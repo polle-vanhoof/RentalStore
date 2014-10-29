@@ -48,6 +48,6 @@ public interface CarRentalCompanyRemote extends Remote{
 
 	public CarType getMostPopularCarType() throws RemoteException;
 
-	public String getBestClient() throws RemoteException;
+	public List<Reservation> getAllReservations() throws RemoteException;
 
 }

@@ -3,14 +3,12 @@ package session;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import rental.Car;
-import rental.CarRentalCompany;
 import rental.CarRentalCompanyRemote;
 import rental.CarType;
 import rental.RentalStore;
@@ -119,6 +117,20 @@ public class CarRentalManager implements CarRentalManagerRemote {
 			}
 		}
 		return bestClients;
+	}
+
+	@Override
+	public void unRegisterCompany(String companyName) throws RemoteException {
+		RentalStore.removeRentalCompany(companyName);
+	}
+
+	@Override
+	public Set<String> getRegisteredCompanyNames() throws RemoteException {
+		Set<String> names = new HashSet<String>();
+		for(String name : RentalStore.getRentals().keySet()){
+			names.add(name);
+		}
+		return names;
 	}
 
 }

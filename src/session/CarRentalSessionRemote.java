@@ -14,18 +14,18 @@ import rental.ReservationException;
 
 public interface CarRentalSessionRemote extends Remote{
     
-    Set<String> getAllRentalCompanies() throws RemoteException;
+    public Set<String> getAllRentalCompanies() throws RemoteException;
     
-    void createQuote(ReservationConstraints constraints, String company) throws ReservationException, RemoteException;
+    public void createQuote(ReservationConstraints constraints, String company) throws ReservationException, RemoteException;
     
-    Set<Quote> getCurrentQuotes() throws RemoteException;
+    public Set<Quote> getCurrentQuotes() throws RemoteException;
     
-    List<Reservation> confirmQuotes() throws ReservationException, RemoteException;
+    public List<Reservation> confirmQuotes() throws ReservationException, RemoteException;
     
-    Set<CarType> getAvailableCarTypes(Date start, Date end) throws RemoteException;
+    public Set<CarType> getAvailableCarTypes(Date start, Date end) throws RemoteException;
     
-    void setClientName(String name) throws RemoteException;
+    public void setClientName(String name) throws RemoteException;
     
-    String getCheapestCarType(Date start, Date end) throws RemoteException, Exception;
+    public String getCheapestCarType(Date start, Date end) throws RemoteException, Exception;
     
 }

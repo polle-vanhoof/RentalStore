@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import rental.CarRentalCompany;
 import rental.CarRentalCompanyRemote;
 import rental.CarType;
 import rental.Quote;
@@ -43,7 +42,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
 	}
 
 	@Override
-	public List<Reservation> confirmQuotes() throws ReservationException, RemoteException{
+	public synchronized List<Reservation> confirmQuotes() throws ReservationException, RemoteException{
 		HashMap<Quote,Reservation> reservations = new HashMap<Quote, Reservation>();
 		LinkedList<Reservation> confirmedReservations = new LinkedList<Reservation>();
 		try {

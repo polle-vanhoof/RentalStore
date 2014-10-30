@@ -12,8 +12,8 @@ import session.SessionManagerRemote;
 
 public class RentalStore {
 
-    private static Map<String, CarRentalCompanyRemote> rentalCompanies;
-    
+	private static Map<String, CarRentalCompanyRemote> rentalCompanies;
+
 	public static void main(String[] args) throws ReservationException, NumberFormatException, IOException {
 		System.setSecurityManager(null);
 		SessionManager sessionManager = new SessionManager();
@@ -28,14 +28,17 @@ public class RentalStore {
 		reg.rebind("sessionManager", sessionManager);
 	}
 
-    public static synchronized Map<String, CarRentalCompanyRemote> getRentals(){
-        return rentalCompanies;
-    }
-    
-    public static synchronized void addRentalCompany(String name, CarRentalCompanyRemote crcr) {
-    	if(rentalCompanies.get(name) == null) {
-    		rentalCompanies.put(name, crcr);
-    	}
-    }
-    
+	public static synchronized Map<String, CarRentalCompanyRemote> getRentals(){
+		return rentalCompanies;
+	}
+
+	public static synchronized void addRentalCompany(String name, CarRentalCompanyRemote crcr) {
+		if(rentalCompanies.get(name) == null) {
+			rentalCompanies.put(name, crcr);
+		}
+	}
+
+	public static synchronized void removeRentalCompany(String name) {
+		rentalCompanies.remove(name);
+	}
 }

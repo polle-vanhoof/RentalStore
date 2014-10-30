@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Car implements Serializable{
 
-    private int id;
+	private static final long serialVersionUID = 1L;
+	private int id;
     private CarType type;
     private List<Reservation> reservations;
 

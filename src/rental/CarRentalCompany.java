@@ -1,5 +1,6 @@
 package rental;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -78,12 +79,6 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 
 
 	@Override
-	public List<Car> getAllCars(){
-		return cars;
-	}
-
-
-	@Override
 	public Set<Car> getCarsByType(String carType) {
 		Set<Car> carsByType = new HashSet<Car>();
 		for (Car car : cars) {
@@ -111,8 +106,6 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 		}
 		return availableCars;
 	}
-
-        
 
 	@Override
 	public Quote createQuote(ReservationConstraints constraints, String guest)
@@ -159,12 +152,18 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 		getCar(res.getCarId()).removeReservation(res);
 	}
 	
-	public CarType getCheapestType(Date start, Date end) {
-		CarType cheapest = new CarType("dummy", 0, 0, Double.MAX_VALUE, false);
+	public CarType getCheapestType(Date start, Date end) throws Exception {
+		//CarType cheapest = new CarType("dummy", 0, 0, Double.MAX_VALUE, false);
+		CarType cheapest = null;
+		double cheapestPrice = new Double(Double.MAX_VALUE);
 		for(CarType carType : getAvailableCarTypes(start, end)) {
-			if(carType.getRentalPricePerDay() < cheapest.getRentalPricePerDay()) {
+			if(carType.getRentalPricePerDay() < cheapestPrice) {
 				cheapest = carType;
+				cheapestPrice = carType.getRentalPricePerDay();
 			}
+		}
+		if(cheapest == null) {
+			throw new Exception("No cheapest car type found!");
 		}
 		return cheapest;
 	}
@@ -193,9 +192,22 @@ public class CarRentalCompany implements CarRentalCompanyRemote {
 	@Override
 	public List<Reservation> getAllReservations(){
 		LinkedList<Reservation> reservations = new LinkedList<Reservation>();
-		for(Car car : getAllCars()){
+		for(Car car : cars){
 			reservations.addAll(car.getAllReservations());
 		}
 		return reservations;
+	}
+	
+	public int getNbOfReservationsByClient(String name) {
+		List<Reservation> resByClient = new ArrayList<Reservation>();
+		for(Car car : cars) {
+			List<Reservation> allResByCar = new ArrayList<Reservation>(car.getAllReservations());
+			for(Reservation res : allResByCar) {
+				if(res.getCarRenter().equals(name)) {
+					resByClient.add(res);
+				}
+			}
+		}
+		return resByClient.size();
 	}
 }

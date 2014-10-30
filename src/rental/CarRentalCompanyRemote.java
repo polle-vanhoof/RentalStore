@@ -27,12 +27,11 @@ public interface CarRentalCompanyRemote extends Remote{
 
 	public abstract Set<CarType> getAvailableCarTypes(Date start, Date end) throws RemoteException;
 	
-	public abstract CarType getCheapestType(Date start, Date end) throws RemoteException;
+	public abstract CarType getCheapestType(Date start, Date end) throws Exception;
 
 	/*********
 	 * CARS *
 	 *********/
-	public abstract List<Car> getAllCars() throws RemoteException;
 
 	public abstract Set<Car> getCarsByType(String carType) throws RemoteException;
 
@@ -49,5 +48,7 @@ public interface CarRentalCompanyRemote extends Remote{
 	public CarType getMostPopularCarType() throws RemoteException;
 
 	public List<Reservation> getAllReservations() throws RemoteException;
+	
+	public int getNbOfReservationsByClient(String name) throws RemoteException;
 
 }
